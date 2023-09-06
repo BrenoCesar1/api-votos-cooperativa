@@ -1,8 +1,7 @@
 package br.com.meta.apivotoscooperativa.domain.dto.in;
 
-import lombok.Data;
-
 import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 
 @Data
 public class DadosPautaDTO {

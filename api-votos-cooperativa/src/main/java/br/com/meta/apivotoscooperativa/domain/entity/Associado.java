@@ -1,16 +1,18 @@
 package br.com.meta.apivotoscooperativa.domain.entity;
 
-import br.com.meta.apivotoscooperativa.domain.dto.in.DadosCadastroAssociado;
+import br.com.meta.apivotoscooperativa.domain.dto.in.DadosCadastroAssociadoDTO;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Table(name = "associados")
 @Entity(name = "Associado")
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -28,7 +30,10 @@ public class Associado {
         @Column(name = "cpf")
         private String cpf;
 
-        public Associado(@Valid DadosCadastroAssociado dados) {
+        @OneToMany(mappedBy = "associado", cascade = CascadeType.REMOVE)
+        private List<Votos> votos;
+
+        public Associado(@Valid DadosCadastroAssociadoDTO dados) {
                 this.cpf = dados.cpf();
                 this.nome = dados.nome();
         }

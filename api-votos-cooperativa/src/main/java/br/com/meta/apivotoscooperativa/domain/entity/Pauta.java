@@ -1,11 +1,12 @@
 package br.com.meta.apivotoscooperativa.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
-import jakarta.persistence.*;
 
 @Table(name = "pautas")
 @Entity(name = "Pauta")
@@ -13,11 +14,19 @@ import jakarta.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
+@JsonIgnoreProperties("pauta")
 public class Pauta {
-
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Boolean active;
+
     private String titulo;
     private String descricao;
+
+    @OneToOne(mappedBy = "pauta", fetch = FetchType.LAZY)
+    private Sessao sessao;
+
+    private int votosSim;
+    private int votosNao;
 }
